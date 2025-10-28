@@ -12,254 +12,419 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            padding: 0;
             min-height: 100vh;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 90%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            z-index: 1;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
             text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
 
         .subtitle {
-            font-size: 14px;
-            opacity: 0.9;
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: 400;
+            letter-spacing: 0.01em;
         }
 
         .controls {
-            padding: 20px 30px;
-            background: #f8f9fa;
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 40px;
             flex-wrap: wrap;
-            border-bottom: 2px solid #e9ecef;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         button {
-            padding: 10px 20px;
+            padding: 14px 28px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.01em;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        button:hover::before {
+            opacity: 1;
         }
 
         .btn-show {
-            background: #28a745;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: white;
+            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.3);
         }
 
         .btn-show:hover {
-            background: #218838;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-show:active {
+            transform: translateY(0);
         }
 
         .btn-hide {
-            background: #dc3545;
+            background: rgba(255, 255, 255, 0.05);
             color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .btn-hide:hover {
-            background: #c82333;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(220,53,69,0.3);
+        }
+
+        .btn-shuffle {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            color: white;
+            box-shadow: 0 4px 24px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-shuffle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-shuffle:active {
+            transform: translateY(0);
         }
 
         .table-wrapper {
-            padding: 30px;
-            max-height: 70vh;
+            max-height: calc(100vh - 300px);
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
+            padding-right: 8px;
+        }
+
+        .table-wrapper::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.5);
         }
 
         .row {
             display: grid;
             grid-template-columns: 60px 1fr 1fr;
-            gap: 15px;
-            padding: 15px;
-            border-bottom: 1px solid #e9ecef;
-            transition: background-color 0.2s ease;
+            gap: 20px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             align-items: start;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.5s ease-out both;
+            animation-delay: calc(var(--index) * 0.02s);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .row:hover {
-            background-color: #f8f9fa;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateX(4px);
         }
 
         .number {
             text-align: center;
-            font-weight: bold;
-            color: #667eea;
-            font-size: 15px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 18px;
+            padding-top: 2px;
         }
 
         .russian-text {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #333;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #e2e8f0;
+            font-weight: 400;
+            letter-spacing: 0.01em;
         }
 
         .english-text {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #555;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #94a3b8;
             cursor: pointer;
-            padding: 10px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            padding: 16px 20px;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            font-weight: 400;
+            letter-spacing: 0.01em;
         }
 
         .english-text.hidden {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
             color: transparent;
             user-select: none;
+            backdrop-filter: blur(20px);
         }
 
         .english-text.hidden::before {
-            content: '🔒 Нажмите, чтобы показать';
+            content: '🔒 Click to reveal';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: white;
-            font-size: 13px;
+            color: #a78bfa;
+            font-size: 14px;
             font-weight: 600;
             white-space: nowrap;
+            letter-spacing: 0.02em;
         }
 
         .english-text.hidden:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3) 0%, rgba(139, 92, 246, 0.3) 100%);
+            border-color: rgba(139, 92, 246, 0.5);
             transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2);
         }
 
         .english-text:not(.hidden) {
-            background: #e8f5e9;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            color: #86efac;
+            animation: reveal 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .table-wrapper::-webkit-scrollbar {
-            width: 10px;
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
-        .table-wrapper::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
+        .stats {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #94a3b8;
+            z-index: 100;
+            animation: fadeIn 0.8s ease-out 0.4s both;
         }
 
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-        }
-
-        .table-wrapper::-webkit-scrollbar-thumb:hover {
-            background: #667eea;
+        .stats strong {
+            color: #a78bfa;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
             .container {
-                border-radius: 10px;
+                padding: 20px 16px;
             }
 
             .header {
-                padding: 20px 15px;
+                margin-bottom: 40px;
             }
 
             h1 {
-                font-size: 20px;
+                font-size: 32px;
             }
 
             .subtitle {
-                font-size: 12px;
+                font-size: 14px;
             }
 
             .controls {
-                padding: 15px;
-                gap: 8px;
+                gap: 10px;
+                margin-bottom: 30px;
             }
 
             button {
-                padding: 8px 15px;
-                font-size: 12px;
+                padding: 12px 20px;
+                font-size: 14px;
                 flex: 1;
                 min-width: 140px;
             }
 
             .table-wrapper {
-                padding: 15px;
-                gap: 10px;
+                gap: 12px;
+                padding-right: 4px;
             }
 
             .row {
                 grid-template-columns: 1fr;
-                gap: 10px;
-                padding: 12px;
+                gap: 12px;
+                padding: 20px 16px;
             }
 
             .number {
-                grid-column: 1;
                 text-align: left;
-                font-size: 13px;
-                color: #667eea;
-                font-weight: bold;
+                font-size: 15px;
             }
 
             .number::before {
                 content: '№ ';
+                color: #6366f1;
             }
 
             .russian-text {
-                font-size: 14px;
-                padding: 10px;
-                background: #f8f9fa;
-                border-radius: 8px;
-                border-left: 3px solid #667eea;
+                font-size: 15px;
+                padding: 14px;
+                background: rgba(99, 102, 241, 0.1);
+                border-radius: 10px;
+                border-left: 3px solid #6366f1;
             }
 
             .english-text {
-                font-size: 14px;
-                padding: 12px;
+                font-size: 15px;
+                padding: 14px;
             }
 
             .english-text.hidden::before {
-                font-size: 12px;
+                font-size: 13px;
                 position: static;
                 transform: none;
+            }
+
+            .stats {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 16px;
+                font-size: 12px;
             }
         }
 
         @media (max-width: 480px) {
             h1 {
-                font-size: 18px;
+                font-size: 28px;
             }
 
             .controls {
                 flex-direction: column;
+                width: 100%;
             }
 
             button {
@@ -267,34 +432,41 @@
                 min-width: auto;
             }
 
-            .table-wrapper {
-                padding: 10px;
-            }
-
             .row {
-                padding: 10px;
+                padding: 16px 12px;
             }
 
             .russian-text, .english-text {
-                font-size: 13px;
+                font-size: 14px;
+            }
+
+            .stats {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
+    <div class="grain"></div>
+    
     <div class="container">
         <div class="header">
-            <h1>100 предложений по теме Customer Service</h1>
-            <p class="subtitle">Нажмите на скрытый перевод, чтобы его увидеть</p>
+            <h1>Customer Service Mastery</h1>
+            <p class="subtitle">Click on hidden translations to reveal them ✨</p>
         </div>
 
         <div class="controls">
-            <button class="btn-show" onclick="showAll()">📖 Показать все переводы</button>
-            <button class="btn-hide" onclick="hideAll()">🔒 Скрыть все переводы</button>
+            <button class="btn-show" onclick="showAll()">📖 Reveal All</button>
+            <button class="btn-hide" onclick="hideAll()">🔒 Hide All</button>
+            <button class="btn-shuffle" onclick="shuffleCards()">🔀 Shuffle</button>
         </div>
 
         <div class="table-wrapper" id="tableBody">
         </div>
+    </div>
+
+    <div class="stats">
+        <strong id="revealed">0</strong> / 100 revealed
     </div>
 
     <script>
@@ -399,14 +571,53 @@
             ["Ваше удовлетворение - наша цель.", "Your satisfaction is our goal."],
             ["Не стесняйтесь обращаться к нам в любое время.", "Feel free to contact us at any time."],
             ["Мы всегда готовы помочь вам.", "We are always ready to help you."]
-            ["Бюджетные авиакомпании могут сэкономить вам деньги, но внимательно проверяйте их тарифы на багаж.", "Budget airlines can save you money, but check their baggage fees carefully."]
         ];
+
+        let currentData = [...data];
+
+        // Создаём аудио контекст для звуковых эффектов
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playClickSound(isRevealing) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (isRevealing) {
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.1);
+            } else {
+                oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.08);
+            }
+            
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
 
         function createTable() {
             const container = document.getElementById('tableBody');
-            data.forEach((row, index) => {
+            container.innerHTML = '';
+            currentData.forEach((row, index) => {
                 const div = document.createElement('div');
                 div.className = 'row';
+                div.style.setProperty('--index', index);
                 div.innerHTML = `
                     <div class="number">${index + 1}</div>
                     <div class="russian-text">${row[0]}</div>
@@ -417,22 +628,39 @@
         }
 
         function toggleTranslation(element) {
+            const isHidden = element.classList.contains('hidden');
+            playClickSound(isHidden);
             element.classList.toggle('hidden');
+            updateStats();
         }
 
         function showAll() {
             document.querySelectorAll('.english-text').forEach(el => {
                 el.classList.remove('hidden');
             });
+            updateStats();
         }
 
         function hideAll() {
             document.querySelectorAll('.english-text').forEach(el => {
                 el.classList.add('hidden');
             });
+            updateStats();
+        }
+
+        function updateStats() {
+            const revealed = document.querySelectorAll('.english-text:not(.hidden)').length;
+            document.getElementById('revealed').textContent = revealed;
+        }
+
+        function shuffleCards() {
+            currentData = shuffleArray(currentData);
+            createTable();
+            updateStats();
         }
 
         createTable();
+        updateStats();
     </script>
 </body>
 </html>
